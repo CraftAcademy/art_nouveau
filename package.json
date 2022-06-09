@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cy:open": "cypress open",
-    "cypress": "BROWSER=none start-server-and-test start http://localhost:3000 cy:open"
+    "cypress": "BROWSER=none start-test start :3000 cy:open"
 
   },
   "eslintConfig": {
