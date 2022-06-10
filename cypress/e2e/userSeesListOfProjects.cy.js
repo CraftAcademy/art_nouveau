@@ -11,8 +11,14 @@ describe("When a user visits the application", () => {
     cy.wait("@projectsIndex").its("request.method").should("eql", "GET");
   });
 
-  it.only('is expected to store project data in application state', () => {
-    cy.window().its('store').invoke('getState').should('be.an', 'array')
+  it("is expected to store project data in application state", () => {
+    cy.wait("@projectsIndex");
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .its("projects.projects")
+      .should("be.an", "array")
+      .and("have.length", 3);
   });
 
   it("is expected to display the title and description of the projects", () => {
