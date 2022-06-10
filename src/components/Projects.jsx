@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 // import axios from "axios";
-import ProjectsService from '../modules/ProjectsService'
+import ProjectsService from "../modules/ProjectsService";
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
+  // const [projects, setProjects] = useState([]);
+  const { projects } = useSelector((state) => state.projects);
 
   // const fetchProjects = async () => {
   //   const { data } = await axios.get("http://localhost:3001/projects");
@@ -14,7 +16,7 @@ const Projects = () => {
     // ProjectsService.index().then(projectsData => {
     //   setProjects(projectsData)
     // });
-    ProjectsService.index(setProjects)
+    ProjectsService.index();
   }, []);
 
   const projectsList = projects.map((project) => {
