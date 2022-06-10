@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import ProjectsService from '../modules/ProjectsService'
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
 
-  const fetchProjects = async () => {
-    const { data } = await axios.get("http://localhost:3001/projects");
-    setProjects(data.projects);
-  };
+  // const fetchProjects = async () => {
+  //   const { data } = await axios.get("http://localhost:3001/projects");
+  //   setProjects(data.projects);
+  // };
+
   useEffect(() => {
-    fetchProjects();
+    // ProjectsService.index().then(projectsData => {
+    //   setProjects(projectsData)
+    // });
+    ProjectsService.index(setProjects)
   }, []);
 
   const projectsList = projects.map((project) => {
