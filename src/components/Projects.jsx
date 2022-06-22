@@ -4,6 +4,7 @@ import ProjectsService from "../modules/ProjectsService";
 
 const Projects = () => {
   const { projects } = useSelector((state) => state.projects);
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     ProjectsService.index();
@@ -16,6 +17,7 @@ const Projects = () => {
           <li key={project.id}>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
+            {currentUser && <p>read more...</p>}
           </li>
         );
       })}

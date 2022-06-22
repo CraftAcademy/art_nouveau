@@ -22,7 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "cy:open": "cypress open",
+    "cy:open": "cypress open --e2e -b chrome",
     "cypress": "BROWSER=none start-test start :3000 cy:open"
   },
   "eslintConfig": {
