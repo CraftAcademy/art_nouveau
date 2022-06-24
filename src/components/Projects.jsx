@@ -17,7 +17,7 @@ const Projects = () => {
           <li key={project.id}>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
-            {currentUser && <p>read more...</p>}
+            {currentUser && <p data-cy={`project-${project.id}-link`}>read more...</p>}
           </li>
         );
       })}
