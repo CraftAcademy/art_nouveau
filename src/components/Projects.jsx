@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import {  useNavigate } from "react-router-dom";
 import ProjectsService from "../modules/ProjectsService";
+
 
 const Projects = () => {
   const { projects } = useSelector((state) => state.projects);
   const { currentUser } = useSelector((state) => state.user);
 
+  const navigate = useNavigate()
   useEffect(() => {
     ProjectsService.index();
   }, []);
@@ -17,7 +20,14 @@ const Projects = () => {
           <li key={project.id}>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
-            {currentUser && <p data-cy={`project-${project.id}-link`}>read more...</p>}
+            {currentUser && (
+              <p
+                onClick={() => navigate(`/projects/${project.id}`)}
+                data-cy={`project-${project.id}-link`}
+              >
+                read more...
+              </p>
+            )}
           </li>
         );
       })}

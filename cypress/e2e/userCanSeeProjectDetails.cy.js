@@ -22,8 +22,8 @@ describe("When a user see the project listing ", () => {
       cy.projectItems().first().should("contain", "read more...");
     });
 
-    it.only("is expected to direct user to new url when clicked", () => {
-      cy.projectItems().first().get("[data-cy=project-1-link]").click();
+    it("is expected to direct user to new url when clicked", () => {
+      cy.get("[data-cy=project-1-link]").click();
       cy.url().should("equal", "http://localhost:3000/projects/1");
     });
   });
