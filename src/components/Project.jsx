@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 const Project = () => {
+  const { state } = useLocation();
   return (
-    <div>Project</div>
-  )
-}
+    <>
+      <h2>This is project page</h2>
+      <h1> {state?.project?.title}</h1>
+      <p>{state?.project?.description}</p>
+    </>
+  );
+};
 
-export default Project
+export default Project;

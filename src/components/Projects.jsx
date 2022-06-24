@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProjectsService from "../modules/ProjectsService";
-
 
 const Projects = () => {
   const { projects } = useSelector((state) => state.projects);
   const { currentUser } = useSelector((state) => state.user);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     ProjectsService.index();
   }, []);
@@ -22,7 +21,11 @@ const Projects = () => {
             <p>{project.description}</p>
             {currentUser && (
               <p
-                onClick={() => navigate(`/projects/${project.id}`)}
+                onClick={() =>
+                  navigate(`/projects/${project.id}`, {
+                    state: { project: project },
+                  })
+                }
                 data-cy={`project-${project.id}-link`}
               >
                 read more...
