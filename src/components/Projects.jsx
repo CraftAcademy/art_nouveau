@@ -1,3 +1,4 @@
+import { Button, List, ListItem, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,14 +14,16 @@ const Projects = () => {
   }, []);
 
   return (
-    <ul data-cy="projects-list">
+    <List data-cy="projects-list">
       {projects.map((project) => {
         return (
-          <li key={project.id}>
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
+          <ListItem key={project.id}>
+            <Text fontSize={20}>{project.title}</Text>
+            <Text>{project.description}</Text>
             {currentUser && (
-              <p
+              <Button
+                colorScheme="teal"
+                size="xs"
                 onClick={() =>
                   navigate(`/projects/${project.id}`, {
                     state: { project: project },
@@ -29,12 +32,12 @@ const Projects = () => {
                 data-cy={`project-${project.id}-link`}
               >
                 read more...
-              </p>
+              </Button>
             )}
-          </li>
+          </ListItem>
         );
       })}
-    </ul>
+    </List>
   );
 };
 
