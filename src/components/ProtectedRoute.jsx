@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
   if (!currentUser) {
     return <div>You can't do that!</div>;
   }
-
+  
   return <Outlet />;
 };
 
