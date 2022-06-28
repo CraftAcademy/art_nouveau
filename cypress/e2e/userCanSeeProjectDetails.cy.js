@@ -44,7 +44,7 @@ describe("When a user see the project listing ", () => {
       cy.projectItems().first().should("not.contain", "read more...");
     });
 
-    it('is expected to kick the user out when trying to navigate to project detail view', () => {
+    it.only('is expected to kick the user out when trying to navigate to project detail view', () => {
       cy.visit('projects/1')
       cy.get('body').should('contain', "You can't do that!")
     });

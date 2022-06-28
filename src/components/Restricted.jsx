@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Restricted = () => {
-  return (
-    <div>You can't do that!</div>
-  )
-}
+  return <div>You can't do that!</div>;
+};
 
-export default Restricted
+export default Restricted;
