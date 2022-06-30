@@ -38,7 +38,7 @@ describe("When user creates an artist account", () => {
         });
       });
 
-      it("is expected to make a network call on submit", () => {
+      it.only("is expected to make a network call on submit", () => {
         cy.wait("@createAccount")
           .its("request.method")
           .should("eql", "POST")

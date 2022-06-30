@@ -1,9 +1,3 @@
-// const SignUp = ({ message }) => {
-//   return <div data-cy="create-account-form">{message}</div>;
-// };
-
-// export default SignUp;
-
 import {
   Flex,
   Box,
@@ -26,7 +20,10 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 const SignUp = ({ message }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    debugger
+  }
 
   return (
     <Flex
@@ -52,11 +49,13 @@ const SignUp = ({ message }) => {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email" isRequired>
+            <form onSubmit={(event) => handleSubmit(event)}>
+
+            <FormControl isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" data-cy="email" />
+              <Input name="email" type="email" data-cy="email" />
             </FormControl>
-            <FormControl id="password" isRequired>
+            <FormControl name="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
@@ -75,7 +74,7 @@ const SignUp = ({ message }) => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-            <FormControl id="password-conf" isRequired>
+            <FormControl name="password-conf" isRequired>
               <FormLabel>Password confirmation</FormLabel>
               <InputGroup>
                 <Input
@@ -96,6 +95,7 @@ const SignUp = ({ message }) => {
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
+                type="submit"
                 data-cy="submit"
                 loadingText="Submitting"
                 size="lg"
@@ -108,6 +108,7 @@ const SignUp = ({ message }) => {
                 Sign up
               </Button>
             </Stack>
+            </form>
             <Stack pt={6}>
               <Text align={"center"}>
                 Already a user? <Link color={"blue.400"}>Login</Link>
