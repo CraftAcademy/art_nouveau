@@ -10,10 +10,15 @@ describe("When user creates an artist account", () => {
         type: "user/setCurrentUser",
         payload: { name: "Thomas", email: "thomas@random.com" },
       });
-      cy.get("[data-cy=create-project-btn]").click();
+      cy.get("[data-cy=create-project]").click();
     });
+
     it("is expected to direct user to create project view", () => {
       cy.url().should("include", "/projects/create");
+    });
+
+    it("is expected to display project create form", () => {
+      cy.get("[data-cy=project-create-ui]").should("be.visible");
     });
   });
 
@@ -32,7 +37,7 @@ describe("When user creates an artist account", () => {
 
     describe("unsuccessfully", () => {
       // Add intercept with 422 or similar
-       // Expect url to go to login path
+      // Expect url to go to login path
       // Fill out create account form
       // Send it off
       // Expect error message

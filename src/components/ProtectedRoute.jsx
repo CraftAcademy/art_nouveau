@@ -6,6 +6,7 @@ const ProtectedRoute = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   if (!currentUser) {
+    debugger
     return <Text fontSize={24}>You can't do that!</Text>;
   }
   

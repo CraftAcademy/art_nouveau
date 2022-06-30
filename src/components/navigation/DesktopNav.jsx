@@ -7,23 +7,27 @@ import {
   PopoverContent,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import DesktopSubNav from "./DesktopSubNav";
 import { NAV_ITEMS } from './NAV_ITEMS';
+
+
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const navigate = useNavigate()
 
   return (
     <Stack direction={"row"} spacing={4}>
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
+        <Box key={navItem.label} data-cy={navItem.dataCy}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
                 p={2}
-                href={navItem.href ?? "#"}
+                onClick={() => navigate(navItem.href)}
                 fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
