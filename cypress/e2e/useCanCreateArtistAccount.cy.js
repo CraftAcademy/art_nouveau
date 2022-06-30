@@ -23,11 +23,27 @@ describe("When user creates an artist account", () => {
   });
 
   describe("as an unauthenticated user", () => {
-    beforeEach(() => {
-      cy.get("[data-cy=create-project-btn]").click();
-    });
     describe("successfully", () => {
-      // Add intercept for POST request to create account
+      beforeEach(() => {
+        cy.intercept("POST", "**/auth**", {
+          fixture: "createAccountResponse.json",
+          statusCode: 201,
+        }).as("createAccount");
+        cy.get("[data-cy=create-project]").click();
+        cy.get("[data-cy=create-account-form]").within(() => {
+          cy.get("[data-cy=email]").type("user@email.com");
+          cy.get("[data-cy=password]").type("password");
+          cy.get("[data-cy=password-conf]").type("password");
+          cy.get("[data-cy=submit]").click();
+        });
+      });
+
+      it("is expected to make a network call on submit", () => {
+        cy.wait("@createAccount")
+          .its("request.method")
+          .should("eql", "POST")
+          .and("response.status", 201);
+      });
       // Expect url to go to login path
       // Fill out create account form
       // Send it off
