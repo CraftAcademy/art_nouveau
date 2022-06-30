@@ -34,7 +34,7 @@ const SignUp = ({ message }) => {
       params: { email: email, password: password, passwordConf: passwordConf },
     });
 
-    dispatch(setCurrentUser({ data }));
+    dispatch(setCurrentUser(data.user));
   };
 
   return (

@@ -7,7 +7,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action) => {
-      debugger
+      // debugger
       state.currentUser = action.payload;
     },
   },

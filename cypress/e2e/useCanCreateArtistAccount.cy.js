@@ -38,11 +38,21 @@ describe("When user creates an artist account", () => {
         });
       });
 
-      it.only("is expected to make a network call on submit", () => {
-        cy.wait("@createAccount")
-          .its("request.method")
-          .should("eql", "POST")
-          .and("response.status", 201);
+      it("is expected to make a network call on submit", () => {
+        cy.wait("@createAccount").its("request.method").should("eql", "POST");
+      });
+
+      it("is expected to response with a 201 status", () => {
+        cy.wait("@createAccount").its("response.statusCode").should("eql", 201);
+      });
+
+
+
+      it.only("is expected to redirect user to create project view", () => {
+        cy.wait("@createAccount").then(({request,response})=> {
+          debugger
+        })
+        cy.url().should("include", "/projects/create");
       });
       // Expect url to go to login path
       // Fill out create account form
