@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe("When user creates an artist account", () => {
   beforeEach(() => {
     cy.visitApplication();
