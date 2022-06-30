@@ -21,6 +21,7 @@ describe("When user creates an artist account", () => {
       cy.get("[data-cy=create-project-btn]").click();
     });
     describe("successfully", () => {
+      // Add intercept for POST request to create account
       // Expect url to go to login path
       // Fill out create account form
       // Send it off
@@ -30,6 +31,11 @@ describe("When user creates an artist account", () => {
 
     describe("unsuccessfully", () => {
       // Add intercept with 422 or similar
+       // Expect url to go to login path
+      // Fill out create account form
+      // Send it off
+      // Expect error message
+      // Expect url /login
     });
   });
 });
