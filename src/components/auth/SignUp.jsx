@@ -16,14 +16,26 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import { setCurrentUser } from "../../state/features/userSlice";
+import { useDispatch } from "react-redux";
 
 const SignUp = ({ message }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    debugger
-  }
+    const email = event.target["email"].value;
+    const password = event.target["password"].value;
+    const passwordConf = event.target["password-conf"].value;
+
+    const { data } = await axios.post("/auth", {
+      params: { email: email, password: password, passwordConf: passwordConf },
+    });
+
+    dispatch(setCurrentUser({ data }));
+  };
 
   return (
     <Flex
@@ -50,64 +62,65 @@ const SignUp = ({ message }) => {
         >
           <Stack spacing={4}>
             <form onSubmit={(event) => handleSubmit(event)}>
-
-            <FormControl isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input name="email" type="email" data-cy="email" />
-            </FormControl>
-            <FormControl name="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  data-cy="password"
-                />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <FormControl name="password-conf" isRequired>
-              <FormLabel>Password confirmation</FormLabel>
-              <InputGroup>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  data-cy="password-conf"
-                />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button
-                type="submit"
-                data-cy="submit"
-                loadingText="Submitting"
-                size="lg"
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                Sign up
-              </Button>
-            </Stack>
+              <FormControl isRequired>
+                <FormLabel>Email address</FormLabel>
+                <Input name="email" type="email" data-cy="email" />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    data-cy="password"
+                  />
+                  <InputRightElement h={"full"}>
+                    <Button
+                      variant={"ghost"}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Password confirmation</FormLabel>
+                <InputGroup>
+                  <Input
+                    name="password-conf"
+                    type={showPassword ? "text" : "password"}
+                    data-cy="password-conf"
+                  />
+                  <InputRightElement h={"full"}>
+                    <Button
+                      variant={"ghost"}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={2}>
+                <Button
+                  type="submit"
+                  data-cy="submit"
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Sign up
+                </Button>
+              </Stack>
             </form>
             <Stack pt={6}>
               <Text align={"center"}>
