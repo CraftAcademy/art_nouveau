@@ -42,16 +42,21 @@ describe("When user creates an artist account", () => {
         cy.wait("@createAccount").its("request.method").should("eql", "POST");
       });
 
+      it.only('is expected to include form data as params', () => {
+        cy.wait("@createAccount").then(({request})=> {
+          expect(request.body.params.email).to.eql("user@email.com")
+          expect(request.body.params.password).to.eql("password")
+          expect(request.body.params.passwordConf).to.eql("password")
+        })
+      });
+
       it("is expected to response with a 201 status", () => {
         cy.wait("@createAccount").its("response.statusCode").should("eql", 201);
       });
 
 
 
-      it.only("is expected to redirect user to create project view", () => {
-        cy.wait("@createAccount").then(({request,response})=> {
-          debugger
-        })
+      it("is expected to redirect user to create project view", () => {
         cy.url().should("include", "/projects/create");
       });
       // Expect url to go to login path
