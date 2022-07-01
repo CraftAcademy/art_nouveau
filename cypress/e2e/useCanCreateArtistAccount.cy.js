@@ -10,7 +10,7 @@ describe("When user creates an artist account", () => {
         type: "user/setCurrentUser",
         payload: { name: "Thomas", email: "thomas@random.com" },
       });
-      cy.get("[data-cy=create-project]").click();
+      cy.getCy('create-project').click();
     });
 
     it("is expected to direct user to create project view", () => {
@@ -18,7 +18,7 @@ describe("When user creates an artist account", () => {
     });
 
     it("is expected to display project create form", () => {
-      cy.get("[data-cy=project-create-ui]").should("be.visible");
+      cy.getCy('project-create-ui').should("be.visible");
     });
   });
 
@@ -29,13 +29,8 @@ describe("When user creates an artist account", () => {
           fixture: "createAccountResponse.json",
           statusCode: 201,
         }).as("createAccount");
-        cy.get("[data-cy=create-project]").click();
-        cy.get("[data-cy=create-account-form]").within(() => {
-          cy.get("[data-cy=email]").type("user@email.com");
-          cy.get("[data-cy=password]").type("password");
-          cy.get("[data-cy=password-conf]").type("password");
-          cy.get("[data-cy=submit]").click();
-        });
+        cy.getCy('create-project').click();
+        cy.signUp({ email: "user@email.com", password: "password" });
       });
 
       it("is expected to make a network call on submit", () => {
@@ -63,15 +58,10 @@ describe("When user creates an artist account", () => {
       beforeEach(() => {
         cy.intercept("POST", "**/auth**", {
           fixture: "createAccountResponseError.json",
-          statusCode: 422
+          statusCode: 422,
         }).as("createAccountError");
-        cy.get("[data-cy=create-project]").click();
-        cy.get("[data-cy=create-account-form]").within(() => {
-          cy.get("[data-cy=email]").type("user@email.com");
-          cy.get("[data-cy=password]").type("password");
-          cy.get("[data-cy=password-conf]").type("password");
-          cy.get("[data-cy=submit]").click();
-        });
+        cy.getCy("create-project").click();
+        cy.signUp({ email: "user@email.com", password: "password" });
       });
 
       it("is expected to respond with a 422 status", () => {
@@ -90,10 +80,7 @@ describe("When user creates an artist account", () => {
       });
 
       it("is expected to inform the user the account creation did not work", () => {
-        cy.get("body").should(
-          "contain.text",
-          "Email has been taken."
-        );
+        cy.get("body").should("contain.text", "Email has been taken.");
       });
 
       it("is expected to stay on the signup page", () => {
