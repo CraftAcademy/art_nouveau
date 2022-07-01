@@ -63,7 +63,7 @@ describe("When user creates an artist account", () => {
       beforeEach(() => {
         cy.intercept("POST", "**/auth**", {
           fixture: "createAccountResponseError.json",
-          statusCode: 422,
+          statusCode: 422
         }).as("createAccountError");
         cy.get("[data-cy=create-project]").click();
         cy.get("[data-cy=create-account-form]").within(() => {
@@ -80,8 +80,17 @@ describe("When user creates an artist account", () => {
           .should("eql", 422);
       });
 
-      it("is expected to inform the user the account creation did not work", () => {
-        cy.get("[data-cy=notification]").should(
+      it("is expected to store error message in application state", () => {
+        cy.wait("@createAccountError");
+        cy.applicationState()
+          .invoke("getState")
+          .its("messages.content")
+          .should("be.an", "array")
+          .and("have.length", 1);
+      });
+
+      it.only("is expected to inform the user the account creation did not work", () => {
+        cy.get("body").should(
           "contain.text",
           "Email has been taken."
         );

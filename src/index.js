@@ -12,7 +12,7 @@ if (window.Cypress) {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <ChakraProvider>
         <BrowserRouter>
@@ -20,5 +20,5 @@ root.render(
         </BrowserRouter>
       </ChakraProvider>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

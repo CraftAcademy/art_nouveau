@@ -18,6 +18,7 @@ import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { setCurrentUser } from "../../state/features/userSlice";
+import { setMessage } from "../../state/features/messageSlice";
 import { useDispatch } from "react-redux";
 
 const SignUp = ({ message }) => {
@@ -41,7 +42,8 @@ const SignUp = ({ message }) => {
 
       dispatch(setCurrentUser(data.user));
     } catch (error) {
-      const message = error.response.data.errors[0]
+      const message = error.response.data.errors
+      dispatch(setMessage(message))
     }
   };
 
