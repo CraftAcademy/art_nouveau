@@ -30,11 +30,19 @@ const SignUp = ({ message }) => {
     const password = event.target["password"].value;
     const passwordConf = event.target["password-conf"].value;
 
-    const { data } = await axios.post("/auth", {
-      params: { email: email, password: password, passwordConf: passwordConf },
-    });
+    try {
+      const { data } = await axios.post("/auth", {
+        params: {
+          email: email,
+          password: password,
+          passwordConf: passwordConf,
+        },
+      });
 
-    dispatch(setCurrentUser(data.user));
+      dispatch(setCurrentUser(data.user));
+    } catch (error) {
+      const message = error.response.data.errors[0]
+    }
   };
 
   return (
