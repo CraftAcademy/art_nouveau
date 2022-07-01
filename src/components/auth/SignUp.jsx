@@ -5,7 +5,6 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  HStack,
   InputRightElement,
   Stack,
   Button,
@@ -20,10 +19,13 @@ import axios from "axios";
 import { setCurrentUser } from "../../state/features/userSlice";
 import { setMessage } from "../../state/features/messageSlice";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const SignUp = ({ message }) => {
+const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,9 +43,10 @@ const SignUp = ({ message }) => {
       });
 
       dispatch(setCurrentUser(data.user));
+      navigate(location.state.originalRoute.pathname);
     } catch (error) {
-      const message = error.response.data.errors
-      dispatch(setMessage(message))
+      const message = error.response.data.errors;
+      dispatch(setMessage(message));
     }
   };
 
@@ -59,9 +62,6 @@ const SignUp = ({ message }) => {
           <Heading fontSize={"4xl"} textAlign={"center"}>
             Create an account
           </Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            {message}
-          </Text>
         </Stack>
         <Box
           data-cy="create-account-form"

@@ -89,7 +89,7 @@ describe("When user creates an artist account", () => {
           .and("have.length", 1);
       });
 
-      it.only("is expected to inform the user the account creation did not work", () => {
+      it("is expected to inform the user the account creation did not work", () => {
         cy.get("body").should(
           "contain.text",
           "Email has been taken."
