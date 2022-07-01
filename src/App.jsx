@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
@@ -10,6 +11,11 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
   const toast = useToast();
   const { content } = useSelector((state) => state.messages);
+
+  useEffect(() => {
+    content.length > 0 && toast({ title: content[0], status: "error" });
+  }, [content]);
+
   return (
     <>
       <Navigation />
@@ -20,7 +26,6 @@ const App = () => {
           <Route path="/projects/create" element={<ProjectCreate />} />
         </Route>
       </Routes>
-      {content.length > 0 && toast({ title: content[0], status: 'error' })}
     </>
   );
 };
