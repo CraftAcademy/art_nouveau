@@ -33,6 +33,9 @@ const SignUp = () => {
     const email = event.target["email"].value;
     const password = event.target["password"].value;
     const passwordConf = event.target["password-conf"].value;
+    const roles = [];
+    event.target["artist"].checked && roles.push("artist");
+    event.target["developer"].checked && roles.push("developer");
 
     try {
       const { data } = await axios.post("/auth", {
@@ -40,6 +43,7 @@ const SignUp = () => {
           email: email,
           password: password,
           passwordConf: passwordConf,
+          roles: roles,
         },
       });
 
@@ -120,8 +124,10 @@ const SignUp = () => {
               <FormControl>
                 <FormLabel>Account type</FormLabel>
                 <Stack spacing={5} direction="row" data-cy="role">
-                  <Checkbox data-cy="artist" name="artist" >Artist</Checkbox>
-                  <Checkbox data-cy="developer" name="developer" >
+                  <Checkbox data-cy="artist" name="artist">
+                    Artist
+                  </Checkbox>
+                  <Checkbox data-cy="developer" name="developer">
                     Developer
                   </Checkbox>
                 </Stack>

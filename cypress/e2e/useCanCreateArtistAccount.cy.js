@@ -60,7 +60,7 @@ describe("When user creates an artist account", () => {
       });
     });
 
-    describe("successfully as an developer", () => {
+    describe("successfully as a developer", () => {
       beforeEach(() => {
         cy.intercept("POST", "**/auth**", {
           fixture: "createAccountResponse.json",
@@ -70,11 +70,11 @@ describe("When user creates an artist account", () => {
         cy.signUp({
           email: "user@email.com",
           password: "password",
-          role: "developer",
+          roles: ["developer"],
         });
       });
 
-      it("is expected to see a not authorized message", () => {
+      it.only("is expected to see a not authorized message", () => {
         cy.get("body").should(
           "contain.text",
           "You can't do that as a developer"
@@ -89,7 +89,11 @@ describe("When user creates an artist account", () => {
           statusCode: 422,
         }).as("createAccountError");
         cy.getCy("create-project").click();
-        cy.signUp({ email: "user@email.com", password: "password" });
+        cy.signUp({
+          email: "user@email.com",
+          password: "password",
+          roles: ["artist"],
+        });
       });
 
       it("is expected to respond with a 422 status", () => {
