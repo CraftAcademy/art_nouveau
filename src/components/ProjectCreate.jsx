@@ -1,5 +1,16 @@
+import { useSelector } from "react-redux";
+
+
 const ProjectCreate = () => {
-  return <div data-cy="project-create-ui">ProjectCreate Interface</div>;
+  const { currentUser } = useSelector((state) => state.user);
+  
+  return (
+    <>
+      {currentUser.isArtist() && (
+        <div data-cy="project-create-ui">ProjectCreate Interface</div>
+      )}
+    </>
+  );
 };
 
 export default ProjectCreate;

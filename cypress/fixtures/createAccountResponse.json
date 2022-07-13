@@ -1,6 +1,7 @@
 {
-  "user" : {
+  "user": {
     "email": "user@email.com",
-    "name": "User"
+    "name": "User",
+    "roles": ["artist"]
   }
 }

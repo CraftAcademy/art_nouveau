@@ -74,7 +74,7 @@ describe("When user creates an artist account", () => {
         });
       });
 
-      it.only("is expected to see a not authorized message", () => {
+      it("is expected to see a not authorized message", () => {
         cy.get("body").should(
           "contain.text",
           "You can't do that as a developer"
