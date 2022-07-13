@@ -12,6 +12,7 @@ import {
   Text,
   useColorModeValue,
   Link,
+  Checkbox,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -115,6 +116,15 @@ const SignUp = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Account type</FormLabel>
+                <Stack spacing={5} direction="row" data-cy="role">
+                  <Checkbox data-cy="artist" name="artist" >Artist</Checkbox>
+                  <Checkbox data-cy="developer" name="developer" >
+                    Developer
+                  </Checkbox>
+                </Stack>
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button

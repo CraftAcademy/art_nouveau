@@ -18,8 +18,6 @@ describe("When a user visits the application", () => {
   });
 
   it("is expected to display the title and description of the projects", () => {
-    // cy.get("[data-cy=projects-list]")
-    //   .children()
     cy.projectItems()
       .first()
       .should("contain.text", "3D disco")

@@ -5,12 +5,13 @@ describe("When user creates an artist account", () => {
   });
 
   describe("as an authenticated user", () => {
+    // can potentially be extracted to another test file
     beforeEach(() => {
       cy.applicationState().invoke("dispatch", {
         type: "user/setCurrentUser",
         payload: { name: "Thomas", email: "thomas@random.com" },
       });
-      cy.getCy('create-project').click();
+      cy.getCy("create-project").click();
     });
 
     it("is expected to direct user to create project view", () => {
@@ -18,19 +19,23 @@ describe("When user creates an artist account", () => {
     });
 
     it("is expected to display project create form", () => {
-      cy.getCy('project-create-ui').should("be.visible");
+      cy.getCy("project-create-ui").should("be.visible");
     });
   });
 
   describe("as an unauthenticated user", () => {
-    describe("successfully", () => {
+    describe("successfully as an artist", () => {
       beforeEach(() => {
         cy.intercept("POST", "**/auth**", {
           fixture: "createAccountResponse.json",
           statusCode: 201,
         }).as("createAccount");
-        cy.getCy('create-project').click();
-        cy.signUp({ email: "user@email.com", password: "password" });
+        cy.getCy("create-project").click();
+        cy.signUp({
+          email: "user@email.com",
+          password: "password",
+          roles: ["artist"],
+        });
       });
 
       it("is expected to make a network call on submit", () => {
@@ -42,6 +47,7 @@ describe("When user creates an artist account", () => {
           expect(request.body.params.email).to.eql("user@email.com");
           expect(request.body.params.password).to.eql("password");
           expect(request.body.params.passwordConf).to.eql("password");
+          expect(request.body.params.roles).to.eql(["artist"]);
         });
       });
 
@@ -51,6 +57,28 @@ describe("When user creates an artist account", () => {
 
       it("is expected to redirect user to create project view", () => {
         cy.url().should("include", "/projects/create");
+      });
+    });
+
+    describe("successfully as an developer", () => {
+      beforeEach(() => {
+        cy.intercept("POST", "**/auth**", {
+          fixture: "createAccountResponse.json",
+          statusCode: 201,
+        }).as("createAccount");
+        cy.getCy("create-project").click();
+        cy.signUp({
+          email: "user@email.com",
+          password: "password",
+          role: "developer",
+        });
+      });
+
+      it("is expected to see a not authorized message", () => {
+        cy.get("body").should(
+          "contain.text",
+          "You can't do that as a developer"
+        );
       });
     });
 
