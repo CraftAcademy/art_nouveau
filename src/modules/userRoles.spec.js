@@ -1,4 +1,4 @@
-import "./userRoles";
+import { isArtist } from "./userRoles";
 
 describe(".isArtist()", () => {
   const artist = {
@@ -11,17 +11,17 @@ describe(".isArtist()", () => {
     email: "thomas@random.com",
     roles: ["developer"],
   };
-  const notUser = {}
+  const notUser = {};
 
   it('is expected to retun true is currentUser.roles include "artist"', () => {
-    expect(artist.isArtist()).toBe(true);
+    expect(isArtist(artist)).toBe(true);
   });
 
   it('is expected to retun false is currentUser.roles does NOT include "artist"', () => {
-    expect(nonArtist.isArtist()).toBe(false);
+    expect(isArtist(nonArtist)).toBe(false);
   });
 
   it('is expected to return false if key "roles" is missing', () => {
-    expect(notUser.isArtist()).toBe(false)
+    expect(isArtist(notUser)).toBe(false);
   });
 });

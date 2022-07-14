@@ -9,7 +9,7 @@ describe("When user creates an artist account", () => {
     beforeEach(() => {
       cy.applicationState().invoke("dispatch", {
         type: "user/setCurrentUser",
-        payload: { name: "Thomas", email: "thomas@random.com" },
+        payload: { name: "Thomas", email: "thomas@random.com", roles: ['artist', 'developer'] },
       });
       cy.getCy("create-project").click();
     });
@@ -27,7 +27,7 @@ describe("When user creates an artist account", () => {
     describe("successfully as an artist", () => {
       beforeEach(() => {
         cy.intercept("POST", "**/auth**", {
-          fixture: "createAccountResponse.json",
+          fixture: "createAccountResponseForArtistAccount.json",
           statusCode: 201,
         }).as("createAccount");
         cy.getCy("create-project").click();
@@ -63,7 +63,7 @@ describe("When user creates an artist account", () => {
     describe("successfully as a developer", () => {
       beforeEach(() => {
         cy.intercept("POST", "**/auth**", {
-          fixture: "createAccountResponse.json",
+          fixture: "createAccountResponseForDeveloperAccount.json",
           statusCode: 201,
         }).as("createAccount");
         cy.getCy("create-project").click();
