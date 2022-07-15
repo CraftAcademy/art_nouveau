@@ -1,15 +1,21 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
-import { Text } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { setMessage } from "../state/features/messageSlice";
 
 const ProtectedRoute = () => {
+  const location = useLocation();
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  if (!currentUser) {
-    return <Text fontSize={24}>You can't do that!</Text>;
-  }
-  
+  useEffect(() => {
+    if (!currentUser) {
+      dispatch(setMessage(["You can't do that!"]));
+      navigate("/auth", { state: { originalRoute: location } });
+    }
+  }, [currentUser, location]);
+
   return <Outlet />;
 };
 

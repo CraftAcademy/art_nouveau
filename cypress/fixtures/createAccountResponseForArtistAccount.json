@@ -1,0 +1,7 @@
+{
+  "user": {
+    "email": "user@email.com",
+    "name": "User",
+    "roles": ["artist"]
+  }
+}
