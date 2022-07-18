@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe("When an artist creates a project", () => {
   beforeEach(() => {
     cy.visitApplication();
@@ -7,7 +8,10 @@ describe("When an artist creates a project", () => {
 
   describe("successfully", () => {
     it("is expected to display a create project input form", () => {
-      cy.getCy("create-project-form").should("be.visible");
+      cy.getCy("project-create-ui").should("be.visible");
+      cy.getCy('project-title').type('My awesome project')
+      cy.getCy('project-description').type('Yada yada...')
+      cy.getCy('project-submit').click()
     });
   });
 
