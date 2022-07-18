@@ -1,7 +1,7 @@
 {
   "message": "Your project was created",
   "project": {
-    "id": 1,
+    "id": 100,
     "title": "My awesome project",
     "description": "Yada yada..."
   }

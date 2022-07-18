@@ -17,11 +17,7 @@ describe("When an artist creates a project", () => {
       cy.getCy("project-submit").click();
     });
 
-    it("is expected to display a create project input form", () => {
-      cy.getCy("project-create-ui").should("be.visible");
-    });
-
-    it.only("is expected to make a network call on submit", () => {
+    it("is expected to make a network call on submit", () => {
       cy.wait("@createProject").its("request.method").should("eql", "POST");
     });
 
@@ -34,6 +30,14 @@ describe("When an artist creates a project", () => {
 
     it("is expected to respond with a 201 status", () => {
       cy.wait("@createProject").its("response.statusCode").should("eql", 201);
+    });
+
+    it('is expected to redirect to projects show page', () => {
+      cy.url().should('include', '/projects/100')
+    });
+
+    it('is expected to display a success message', () => {
+      cy.get('body').should('contain.text', 'Your project was created')
     });
   });
 
