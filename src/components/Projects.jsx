@@ -13,7 +13,7 @@ const Projects = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (location?.state?.message) {
-      dispatch(setMessage([location.state.message]))
+      dispatch(setMessage([{content: location.state.message, status: 'error'}]))
     }
     ProjectsService.index();
   }, [location, dispatch]);

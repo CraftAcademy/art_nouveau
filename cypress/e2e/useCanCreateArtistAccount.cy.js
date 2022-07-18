@@ -106,7 +106,7 @@ describe("When user creates an artist account", () => {
         cy.wait("@createAccountError");
         cy.applicationState()
           .invoke("getState")
-          .its("messages.content")
+          .its("messages.message")
           .should("be.an", "array")
           .and("have.length", 1);
       });

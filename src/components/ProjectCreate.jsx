@@ -2,7 +2,6 @@ import {
   Box,
   VStack,
   Heading,
-  Stack,
   FormControl,
   FormLabel,
   InputGroup,
@@ -10,16 +9,28 @@ import {
   Textarea,
   Button,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import { isArtist } from "../modules/userRoles";
+import { setMessage } from "../state/features/messageSlice";
 const ProjectCreate = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const title = event.target["title"].value;
+    const description = event.target["description"].value;
 
-    debugger;
+    const { data } = await axios.post("/projects", {
+      params: { title: title, description: description },
+    });
+    dispatch(setMessage([{content: data.message, status: 'success'}]))
+    navigate(`/projects/${data.project.id}`, {
+      replace: true,
+      state: { project: data.project },
+    });
   };
   return (
     <>
@@ -83,7 +94,6 @@ const ProjectCreate = () => {
                     _hover={{
                       bg: "blue.500",
                     }}
-                    isFullWidth
                   >
                     Create
                   </Button>
