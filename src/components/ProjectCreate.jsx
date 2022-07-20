@@ -85,6 +85,7 @@ const ProjectCreate = () => {
                     />
                   </FormControl>
                   <Button
+                    disabled
                     data-cy="project-submit"
                     type="submit"
                     colorScheme="blue"
