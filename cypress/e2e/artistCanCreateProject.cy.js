@@ -50,7 +50,7 @@ describe("When an artist creates a project", () => {
       // cy.getCy("project-submit").click();
     });
 
-    describe("with a empty description field", () => {
+    describe.only("with a empty description field", () => {
       beforeEach(() => {
         cy.getCy("project-title").type("My awesome project");
       });

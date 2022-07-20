@@ -10,14 +10,38 @@ import {
   Button,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { isArtist } from "../modules/userRoles";
 import { setMessage } from "../state/features/messageSlice";
+const CustomButton = ({ disabled }) => {
+  debugger;
+  return (
+    <Button
+      disabled={disabled}
+      data-cy="project-submit"
+      type="submit"
+      colorScheme="blue"
+      bg="blue.400"
+      color="white"
+      _hover={{
+        bg: "blue.500",
+      }}
+    >
+      Create
+    </Button>
+  );
+};
+
 const ProjectCreate = () => {
+  let titleRef = useRef(null);
+  let descriptionRef = useRef(null);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const title = event.target["title"].value;
@@ -26,12 +50,18 @@ const ProjectCreate = () => {
     const { data } = await axios.post("/projects", {
       params: { title: title, description: description },
     });
-    dispatch(setMessage([{content: data.message, status: 'success'}]))
+    dispatch(setMessage([{ content: data.message, status: "success" }]));
     navigate(`/projects/${data.project.id}`, {
       replace: true,
       state: { project: data.project },
     });
   };
+
+  const validateFieldContent = () => {
+    debugger
+    return true
+  };
+
   return (
     <>
       {currentUser && isArtist(currentUser) ? (
@@ -69,6 +99,7 @@ const ProjectCreate = () => {
                         type="text"
                         name="title"
                         placeholder="Your projet's title"
+                        onChange={(e) => setTitle(e.target.value)}
                       />
                     </InputGroup>
                   </FormControl>
@@ -82,21 +113,10 @@ const ProjectCreate = () => {
                       placeholder="Describe your project"
                       rows={6}
                       resize="none"
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                   </FormControl>
-                  <Button
-                    disabled
-                    data-cy="project-submit"
-                    type="submit"
-                    colorScheme="blue"
-                    bg="blue.400"
-                    color="white"
-                    _hover={{
-                      bg: "blue.500",
-                    }}
-                  >
-                    Create
-                  </Button>
+                  <CustomButton disabled={validateFieldContent()} />
                 </form>
               </VStack>
             </Box>
