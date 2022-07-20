@@ -11,7 +11,7 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      dispatch(setMessage(["You can't do that!"]));
+      dispatch(setMessage([{content: "You can't do that!", status: 'error'}]));
       navigate("/auth", { state: { originalRoute: location } });
     }
   }, [currentUser, location]);

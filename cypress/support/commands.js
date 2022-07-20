@@ -10,6 +10,16 @@ Cypress.Commands.add("visitApplication", () => {
   cy.visit("/");
 });
 
+Cypress.Commands.add("authenticateUser", (options) => {
+  const name = options.name || "Random Person";
+  const email = options.email || "random@email.com";
+  const roles = options.roles || ["artist", "developer"];
+  cy.applicationState().invoke("dispatch", {
+    type: "user/setCurrentUser",
+    payload: { name: name, email: email, roles: roles },
+  });
+});
+
 Cypress.Commands.add("projectItems", () => {
   cy.get("[data-cy=projects-list]").children();
 });

@@ -4,11 +4,11 @@ import { useToast } from "@chakra-ui/react";
 
 const Toast = () => {
   const toast = useToast();
-  const { content } = useSelector((state) => state.messages);
+  const { message } = useSelector((state) => state.messages);
 
   useEffect(() => {
-    content.length > 0 && toast({ title: content[0], status: "error" });
-  }, [content]);
+    message.length > 0 && toast({ title: message[0].content, status: message[0].status });
+  }, [message]);
 };
 
 export default Toast;
