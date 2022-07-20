@@ -21,7 +21,7 @@ describe("When an artist creates a project", () => {
       cy.getCy("project-create-ui").should("be.visible");
     });
 
-    it.only("is expected to make a network call on submit", () => {
+    it("is expected to make a network call on submit", () => {
       cy.wait("@createProject").its("request.method").should("eql", "POST");
     });
 
@@ -37,5 +37,35 @@ describe("When an artist creates a project", () => {
     });
   });
 
-  describe("unsuccessfully", () => {});
+  describe("unsuccessfully", () => {
+    beforeEach(() => {
+      cy.intercept("POST", "**/projects", {
+        fixture: "projectCreateErrorResponse.json",
+        statusCode: 422,
+      }).as("createProjectError");
+      // cy.getCy("project-submit").click();
+    });
+
+    describe("with a empty description field", () => {
+      beforeEach(() => {
+        cy.getCy("project-title").type("My awesome project");
+      });
+
+      it.only("is expected to only display a disabled submit button", () => {
+        cy.getCy("project-submit").should("be.disabled");
+        cy.getCy("project-description").type("Something something...");
+        cy.getCy("project-submit").should("not.be.disabled");
+      });
+    });
+
+    it("is expected to respond with a 422 status", () => {
+      cy.wait("@createProjectError")
+        .its("response.statusCode")
+        .should("eql", 422);
+    });
+
+    it("is expected to inform the user something went wrong", () => {
+      cy.get("body").should("contain.text", "Description can't be empty");
+    });
+  });
 });
