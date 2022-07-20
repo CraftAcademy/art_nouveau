@@ -10,13 +10,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { isArtist } from "../modules/userRoles";
 import { setMessage } from "../state/features/messageSlice";
 const CustomButton = ({ disabled }) => {
-  debugger;
   return (
     <Button
       disabled={disabled}
@@ -35,17 +34,23 @@ const CustomButton = ({ disabled }) => {
 };
 
 const ProjectCreate = () => {
-  let titleRef = useRef(null);
-  let descriptionRef = useRef(null);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  const [inputsInvalid, setInputsInvalid] = useState(true)
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (title && description) {
+      setInputsInvalid(false)
+    }
+  }, [title, description])
+  
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const title = event.target["title"].value;
-    const description = event.target["description"].value;
+    // event.preventDefault();
+    // const title = event.target["title"].value;
+    // const description = event.target["description"].value;
 
     const { data } = await axios.post("/projects", {
       params: { title: title, description: description },
@@ -55,11 +60,6 @@ const ProjectCreate = () => {
       replace: true,
       state: { project: data.project },
     });
-  };
-
-  const validateFieldContent = () => {
-    debugger
-    return true
   };
 
   return (
@@ -116,7 +116,7 @@ const ProjectCreate = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     />
                   </FormControl>
-                  <CustomButton disabled={validateFieldContent()} />
+                  <CustomButton disabled={inputsInvalid} />
                 </form>
               </VStack>
             </Box>
