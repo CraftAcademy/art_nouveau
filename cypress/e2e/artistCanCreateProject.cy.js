@@ -6,6 +6,30 @@ describe("When an artist creates a project", () => {
     cy.getCy("create-project").click();
   });
 
+  describe('the submit button', () => { 
+
+    it('is expected to be disabled', () => {
+      cy.getCy("project-submit").should("be.disabled");
+    });
+
+    it('is expected to remain disabled when only title field has value', () => {
+      cy.getCy("project-title").type("Something something...");
+      cy.getCy("project-submit").should("be.disabled");
+    });
+
+    it('is expected to remain disabled when only description field has value', () => {
+      cy.getCy("project-description").type("Something something...");
+      cy.getCy("project-submit").should("be.disabled");
+    });
+
+    it("is expected to be enabled when both fields have values", () => {
+      cy.getCy("project-title").type("Something something...");
+      cy.getCy("project-description").type("Something something...");
+      cy.getCy("project-submit").should("not.be.disabled");
+    });
+   })
+
+
   describe("successfully", () => {
     beforeEach(() => {
       cy.intercept("POST", "**/projects", {
@@ -32,7 +56,7 @@ describe("When an artist creates a project", () => {
       cy.wait("@createProject").its("response.statusCode").should("eql", 201);
     });
 
-    it('is expected to redirect to projects show page', () => {
+    it.only('is expected to redirect to projects show page', () => {
       cy.url().should('include', '/projects/100')
     });
 
@@ -55,11 +79,7 @@ describe("When an artist creates a project", () => {
         cy.getCy("project-title").type("My awesome project");
       });
 
-      it("is expected to only display a disabled submit button", () => {
-        cy.getCy("project-submit").should("be.disabled");
-        cy.getCy("project-description").type("Something something...");
-        cy.getCy("project-submit").should("not.be.disabled");
-      });
+
     });
 
     it("is expected to respond with a 422 status", () => {

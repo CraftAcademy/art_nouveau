@@ -56,6 +56,7 @@ const ProjectCreate = () => {
       params: { title: title, description: description },
     });
     dispatch(setMessage([{ content: data.message, status: "success" }]));
+    debugger
     navigate(`/projects/${data.project.id}`, {
       replace: true,
       state: { project: data.project },
