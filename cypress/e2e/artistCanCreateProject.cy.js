@@ -56,7 +56,7 @@ describe("When an artist creates a project", () => {
       cy.wait("@createProject").its("response.statusCode").should("eql", 201);
     });
 
-    it.only('is expected to redirect to projects show page', () => {
+    it('is expected to redirect to projects show page', () => {
       cy.url().should('include', '/projects/100')
     });
 

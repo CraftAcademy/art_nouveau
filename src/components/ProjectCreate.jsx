@@ -10,12 +10,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useRef, useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { isArtist } from "../modules/userRoles";
 import { setMessage } from "../state/features/messageSlice";
-const CustomButton = ({ disabled }) => {
+const SubmitButton = ({ disabled }) => {
   return (
     <Button
       disabled={disabled}
@@ -48,15 +48,11 @@ const ProjectCreate = () => {
   }, [title, description])
   
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // const title = event.target["title"].value;
-    // const description = event.target["description"].value;
-
+    event.preventDefault()
     const { data } = await axios.post("/projects", {
       params: { title: title, description: description },
     });
     dispatch(setMessage([{ content: data.message, status: "success" }]));
-    debugger
     navigate(`/projects/${data.project.id}`, {
       replace: true,
       state: { project: data.project },
@@ -117,7 +113,7 @@ const ProjectCreate = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     />
                   </FormControl>
-                  <CustomButton disabled={inputsInvalid} />
+                  <SubmitButton disabled={inputsInvalid} />
                 </form>
               </VStack>
             </Box>
