@@ -51,7 +51,7 @@ const SignUp = () => {
       navigate(location.state.originalRoute.pathname);
     } catch (error) {
       const message = error.response.data.errors;
-      dispatch(setMessage(message));
+      dispatch(setMessage([{ content: message, status: "error" }]));
     }
   };
 
