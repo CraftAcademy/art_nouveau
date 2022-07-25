@@ -89,7 +89,7 @@ const Navigation = () => {
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
+      <Collapse in={isOpen} animateOpacity data-cy="hamburger">
         <MobileNav />
       </Collapse>
     </Box>
