@@ -10,7 +10,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { isArtist } from "../modules/userRoles";
@@ -36,27 +36,34 @@ const SubmitButton = ({ disabled }) => {
 const ProjectCreate = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
-  const [inputsInvalid, setInputsInvalid] = useState(true)
+  const [inputsInvalid, setInputsInvalid] = useState(true);
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (title && description) {
-      setInputsInvalid(false)
+      setInputsInvalid(false);
     }
-  }, [title, description])
-  
+  }, [title, description]);
+
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    const { data } = await axios.post("/projects", {
-      params: { title: title, description: description },
-    });
-    dispatch(setMessage([{ content: data.message, status: "success" }]));
-    navigate(`/projects/${data.project.id}`, {
-      replace: true,
-      state: { project: data.project },
-    });
+    event.preventDefault();
+
+    try {
+      const { data } = await axios.post("/projects", {
+        params: { title: title, description: description },
+      });
+      dispatch(setMessage([{ content: data.message, status: "success" }]));
+      navigate(`/projects/${data.project.id}`, {
+        replace: true,
+        state: { project: data.project },
+      });
+    } catch (error) {
+      error.response.data.errors.forEach((message) => {
+        dispatch(setMessage([{ content: message, status: "error" }]));
+      });
+    }
   };
 
   return (

@@ -71,15 +71,9 @@ describe("When an artist creates a project", () => {
         fixture: "projectCreateErrorResponse.json",
         statusCode: 422,
       }).as("createProjectError");
-      // cy.getCy("project-submit").click();
-    });
-
-    describe("with a empty description field", () => {
-      beforeEach(() => {
-        cy.getCy("project-title").type("My awesome project");
-      });
-
-
+      cy.getCy("project-title").type("My awesome project");
+      cy.getCy("project-description").type("Yada yada...");
+      cy.getCy("project-submit").click();
     });
 
     it("is expected to respond with a 422 status", () => {
