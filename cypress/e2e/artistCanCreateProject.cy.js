@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const viewports = ["ipad-mini", "macbook-16", "iphone-x"];
+const viewports = [ "iphone-x", "macbook-16"];
 
 viewports.forEach((viewport) => {
   describe(`While using the application on ${viewport}`, () => {
@@ -9,18 +9,18 @@ viewports.forEach((viewport) => {
     });
     describe("When an artist creates a project", () => {
       beforeEach(() => {
-        cy.visitApplication();
-        cy.authenticateUser({ roles: ["artist"] });
         if (viewport === "iphone-x") {
-          cy.get('[aria-label="Toggle Navigation"]').click();
-          cy.getCy("create-project-mobile").click();
+          cy.visitApplication('projects/create')
+          cy.authenticateUser({ roles: ["artist"] });
         } else {
+          cy.visitApplication();
+          cy.authenticateUser({ roles: ["artist"] });
           cy.getCy("create-project").click();
         }
       });
 
       describe("the submit button", () => {
-        it.only("is expected to be disabled", () => {
+        it("is expected to be disabled", () => {
           cy.getCy("project-submit").should("be.disabled");
         });
 

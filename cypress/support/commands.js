@@ -3,11 +3,11 @@ Cypress.Commands.add("getCy", (identifier) => {
   cy.get(`[data-cy=${identifier}]`);
 });
 
-Cypress.Commands.add("visitApplication", () => {
+Cypress.Commands.add("visitApplication", (path) => {
   cy.intercept("GET", "**/projects", { fixture: "projectsIndex.json" }).as(
     "projectsIndex"
   );
-  cy.visit("/");
+  cy.visit(path ? `/${path}` : '/');
 });
 
 Cypress.Commands.add("authenticateUser", (options) => {
