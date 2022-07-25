@@ -60,9 +60,13 @@ const ProjectCreate = () => {
         state: { project: data.project },
       });
     } catch (error) {
-      error.response.data.errors.forEach((message) => {
-        dispatch(setMessage([{ content: message, status: "error" }]));
-      });
+      if (error?.response?.data?.errors) {
+        error.response.data.errors.forEach((message) => {
+          dispatch(setMessage([{ content: message, status: "error" }]));
+        });
+      } else {
+        dispatch(setMessage([{ content: `${error.message}, please try again later...`, status: "error" }]));
+      }
     }
   };
 
