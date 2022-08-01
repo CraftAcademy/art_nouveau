@@ -65,11 +65,17 @@ const ProjectCreate = () => {
           dispatch(setMessage([{ content: message, status: "error" }]));
         });
       } else {
-        dispatch(setMessage([{ content: `${error.message}, please try again later...`, status: "error" }]));
+        dispatch(
+          setMessage([
+            {
+              content: `${error.message}, please try again later...`,
+              status: "error",
+            },
+          ])
+        );
       }
     }
   };
-
   return (
     <>
       {currentUser && isArtist(currentUser) ? (

@@ -11,7 +11,7 @@ import {
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
-const MobileNavItem = ({ label, children, href }) => {
+const MobileNavItem = ({ label, children, href, dataCy }) => {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
 
@@ -20,12 +20,13 @@ const MobileNavItem = ({ label, children, href }) => {
       <Flex
         py={2}
         as={Link}
-        href={href ?? "#"}
+        onClick={() => navigate(href)}
         justify={"space-between"}
         align={"center"}
         _hover={{
           textDecoration: "none",
         }}
+        data-cy={dataCy + '-mobile'}
       >
         <Text
           fontWeight={600}
