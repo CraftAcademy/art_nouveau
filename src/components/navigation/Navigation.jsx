@@ -73,9 +73,6 @@ const Navigation = () => {
                 fontWeight={400}
                 variant={"link"}
                 href={"#"}
-                onClick={(event) => {
-                  event.preventDefault();
-                }}
               >
                 Sign In
               </Button>

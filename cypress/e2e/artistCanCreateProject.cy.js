@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const viewports = [ "iphone-x", "macbook-16"];
+const viewports = ["iphone-x", "macbook-16"];
 
 viewports.forEach((viewport) => {
   describe(`While using the application on ${viewport}`, () => {
@@ -9,14 +9,8 @@ viewports.forEach((viewport) => {
     });
     describe("When an artist creates a project", () => {
       beforeEach(() => {
-        if (viewport === "iphone-x") {
-          cy.visitApplication('projects/create')
-          cy.authenticateUser({ roles: ["artist"] });
-        } else {
-          cy.visitApplication();
-          cy.authenticateUser({ roles: ["artist"] });
-          cy.getCy("create-project").click();
-        }
+        cy.visitApplication("projects/create");
+        cy.authenticateUser({ roles: ["artist"] });
       });
 
       describe("the submit button", () => {
