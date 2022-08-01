@@ -20,13 +20,13 @@ const MobileNavItem = ({ label, children, href, dataCy }) => {
       <Flex
         py={2}
         as={Link}
-        href={href ?? "#"}
+        onClick={() => navigate(href)}
         justify={"space-between"}
         align={"center"}
         _hover={{
           textDecoration: "none",
         }}
-        data-cy={dataCy + "-mobile"}
+        data-cy={dataCy + '-mobile'}
       >
         <Text
           fontWeight={600}

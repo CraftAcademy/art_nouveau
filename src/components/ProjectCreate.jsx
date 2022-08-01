@@ -41,10 +41,6 @@ const ProjectCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   debugger
-  // }, [])
-  
   useEffect(() => {
     if (title && description) {
       setInputsInvalid(false);

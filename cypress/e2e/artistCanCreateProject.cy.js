@@ -9,8 +9,15 @@ viewports.forEach((viewport) => {
     });
     describe("When an artist creates a project", () => {
       beforeEach(() => {
-        cy.visitApplication("projects/create");
+        cy.visitApplication();
         cy.authenticateUser({ roles: ["artist"] });
+        cy.wait(1000);
+        if (viewport === "iphone-x") {
+          cy.get('[aria-label="Toggle Navigation"]').click();
+          cy.getCy("create-project-mobile").click();
+        } else {
+          cy.getCy("create-project").click();
+        }
       });
 
       describe("the submit button", () => {
@@ -105,7 +112,7 @@ viewports.forEach((viewport) => {
             cy.getCy("project-submit").click();
           });
 
-          it("is expected to respond with a 500 status", () => {
+          it("is expected to respond with a network error", () => {
             cy.wait("@networkError").should("have.property", "error");
           });
 

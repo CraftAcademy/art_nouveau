@@ -7,16 +7,18 @@ Cypress.Commands.add("visitApplication", (path) => {
   cy.intercept("GET", "**/projects", { fixture: "projectsIndex.json" }).as(
     "projectsIndex"
   );
-  cy.visit(path ? `/${path}` : '/');
+  cy.visit(path ? `/${path}` : "/");
 });
 
 Cypress.Commands.add("authenticateUser", (options) => {
-  const name = options.name || "Random Person";
-  const email = options.email || "random@email.com";
-  const roles = options.roles || ["artist", "developer"];
+  const defaultSettings = {
+    name: "Random Person",
+    email: "random@email.com",
+    roles: ["artist", "developer"],
+  };
   cy.applicationState().invoke("dispatch", {
     type: "user/setCurrentUser",
-    payload: { name: name, email: email, roles: roles },
+    payload: { ...defaultSettings, ...options },
   });
 });
 
