@@ -46,7 +46,6 @@ const SignUp = () => {
           roles: roles,
         },
       });
-
       dispatch(setCurrentUser(data.user));
       navigate(location.state.originalRoute.pathname);
     } catch (error) {

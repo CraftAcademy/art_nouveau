@@ -13,11 +13,25 @@ const Projects = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (location?.state?.message) {
-      dispatch(setMessage([{content: location.state.message, status: 'error'}]))
+      dispatch(
+        setMessage([{ content: location.state.message, status: "error" }])
+      );
     }
     ProjectsService.index();
   }, [location, dispatch]);
 
+  const handleClick = (project) => {
+    if (currentUser) {
+      navigate(`/projects/${project.id}`, {
+        state: { project: project },
+      });
+    } else {
+      navigate("/auth", {
+        replace: true,
+        state: { originalRoute: { pathname: `/projects/${project.id}` } },
+      });
+    }
+  };
   return (
     <List data-cy="projects-list">
       {projects.map((project) => {
@@ -25,20 +39,15 @@ const Projects = () => {
           <ListItem key={project.id}>
             <Text fontSize={20}>{project.title}</Text>
             <Text>{project.description}</Text>
-            {currentUser && (
-              <Button
-                colorScheme="teal"
-                size="xs"
-                onClick={() =>
-                  navigate(`/projects/${project.id}`, {
-                    state: { project: project },
-                  })
-                }
-                data-cy={`project-${project.id}-link`}
-              >
-                read more...
-              </Button>
-            )}
+
+            <Button
+              colorScheme="teal"
+              size="xs"
+              onClick={() => handleClick(project)}
+              data-cy={`project-${project.id}-link`}
+            >
+              read more...
+            </Button>
           </ListItem>
         );
       })}
