@@ -11,7 +11,6 @@ viewports.forEach((viewport) => {
       beforeEach(() => {
         cy.visitApplication();
         cy.authenticateUser({ roles: ["artist"] });
-        cy.wait(1000);
         if (viewport === "iphone-x") {
           cy.get('[aria-label="Toggle Navigation"]').click();
           cy.getCy("create-project-mobile").click();
