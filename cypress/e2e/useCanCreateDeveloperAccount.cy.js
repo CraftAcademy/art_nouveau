@@ -7,7 +7,7 @@ describe("When user creates a developer account", () => {
   describe("as an unauthenticated user", () => {
     describe("successfully as a developer", () => {
       beforeEach(() => {
-        cy.intercept('GET', 'projects/1', {fixture: 'projectsShowId1.json'})
+        cy.intercept("GET", "projects/1", { fixture: "projectsShowId1.json" });
         cy.intercept("POST", "**/auth**", {
           fixture: "createAccountResponseForDeveloperAccount.json",
           statusCode: 201,
@@ -44,6 +44,17 @@ describe("When user creates a developer account", () => {
 
       it("is expected to show a join project button", () => {
         cy.getCy("project-join").should("be.visible");
+      });
+    });
+
+    describe("unsuccessfully as an artist", () => {
+      beforeEach(() => {
+        cy.authenticateUser({ roles: ["artist"] });
+        cy.getCy("project-1-link").click();
+      });
+
+      it("is expected that the join button should not exist", () => {
+        cy.getCy("project-join").should("not.exist");
       });
     });
   });
