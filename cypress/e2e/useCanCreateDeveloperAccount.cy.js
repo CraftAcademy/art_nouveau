@@ -7,6 +7,7 @@ describe("When user creates a developer account", () => {
   describe("as an unauthenticated user", () => {
     describe("successfully as a developer", () => {
       beforeEach(() => {
+        cy.viewport('ipad-2')
         cy.intercept("GET", "projects/1", { fixture: "projectsShowId1.json" });
         cy.intercept("POST", "**/auth**", {
           fixture: "createAccountResponseForDeveloperAccount.json",

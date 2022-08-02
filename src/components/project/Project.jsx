@@ -3,7 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { isDeveloper } from "../modules/userRoles";
+// import { isDeveloper } from "../modules/userRoles";
+import ProjectUI from "./ProjectUI";
 
 const Project = () => {
   const { state } = useLocation();
@@ -29,10 +30,8 @@ const Project = () => {
 
   return (
     <>
-      <h1>{project.title}</h1>
-      <p>{project.description}</p>
-      {currentUser && isDeveloper(currentUser) && (
-        <Button data-cy="project-join">Join</Button>
+      {project && currentUser && (
+        <ProjectUI project={project} currentUser={currentUser} />
       )}
     </>
   );
