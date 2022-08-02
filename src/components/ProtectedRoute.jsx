@@ -14,7 +14,7 @@ const ProtectedRoute = () => {
       dispatch(setMessage([{content: "You can't do that!", status: 'error'}]));
       navigate("/auth", { state: { originalRoute: location } });
     }
-  }, [currentUser, location]);
+  }, [currentUser, location, dispatch, navigate]);
 
   return <Outlet />;
 };

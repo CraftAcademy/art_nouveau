@@ -1,9 +1,7 @@
-import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-// import { isDeveloper } from "../modules/userRoles";
 import ProjectUI from "./ProjectUI";
 
 const Project = () => {
