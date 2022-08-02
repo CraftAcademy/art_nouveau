@@ -6,5 +6,6 @@ module.exports = defineConfig({
     chromeWebSecurity: false,
     excludeSpecPattern: process.env.CI ? ["cypress/e2e/all.cy.js"] : [],
     video: false,
+    retries: 1
   },
 });
