@@ -14,7 +14,6 @@ describe("When user creates a developer account", () => {
           statusCode: 201,
         }).as("createAccount");
         cy.getCy("project-1-link").click();
-
         cy.signUp({
           email: "user@email.com",
           password: "password",

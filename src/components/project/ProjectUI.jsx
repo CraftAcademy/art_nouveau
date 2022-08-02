@@ -99,8 +99,6 @@ const ProjectUI = ({ project, currentUser }) => {
               Join this project
             </Button>
           )}
-
-
         </Stack>
       </SimpleGrid>
     </Container>

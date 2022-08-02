@@ -20,7 +20,7 @@ const Projects = () => {
     ProjectsService.index();
   }, [location, dispatch]);
 
-  const handleClick = (project) => {
+  const handleProjectNavigation = (project) => {
     if (currentUser) {
       navigate(`/projects/${project.id}`, {
         state: { project: project },
@@ -43,7 +43,7 @@ const Projects = () => {
             <Button
               colorScheme="teal"
               size="xs"
-              onClick={() => handleClick(project)}
+              onClick={() => handleProjectNavigation(project)}
               data-cy={`project-${project.id}-link`}
             >
               read more...
