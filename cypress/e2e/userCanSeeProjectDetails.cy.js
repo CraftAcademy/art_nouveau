@@ -45,8 +45,13 @@ describe("When a user see the project listing ", () => {
   });
 
   describe("as a visitor", () => {
-    it("is expected NOT to see a 'read more' link for each project", () => {
-      cy.projectItems().first().should("not.contain", "read more...");
+    it("is expected to see a 'read more' link for each project", () => {
+      cy.projectItems().first().should("contain", "read more...");
+    });
+
+    it('is expected to route visitor to sign-up view', () => {
+      cy.visit("projects/1");
+      cy.url().should("include", "/auth");
     });
 
     it("is expected to kick the user out when trying to navigate to project detail view", () => {

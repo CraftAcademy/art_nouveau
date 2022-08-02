@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/navigation/Navigation";
-import Project from "./components/Project";
+import Project from "./components/project/Project";
 import ProjectCreate from "./components/ProjectCreate";
 import Projects from "./components/Projects";
 import ProtectedRoute from "./components/ProtectedRoute";
