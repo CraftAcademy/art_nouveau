@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const viewports = ["iphone-x", "macbook-16"];
+const viewports = ["macbook-16", "iphone-x"];
 
 viewports.forEach((viewport) => {
   describe(`While using the application on ${viewport}`, () => {

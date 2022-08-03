@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/navigation/Navigation";
 import Project from "./components/project/Project";
-import ProjectCreate from "./components/ProjectCreate";
+import ProjectCreate from "./components/project/ProjectCreate";
 import Projects from "./components/Projects";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SignUp from "./components/auth/SignUp";

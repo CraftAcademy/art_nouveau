@@ -1,6 +1,5 @@
 import {
   Box,
-  VStack,
   Heading,
   FormControl,
   FormLabel,
@@ -8,16 +7,20 @@ import {
   Input,
   Textarea,
   Button,
+  Container,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { isArtist } from "../modules/userRoles";
-import { setMessage } from "../state/features/messageSlice";
+import { isArtist } from "../../modules/userRoles";
+import { setMessage } from "../../state/features/messageSlice";
+
 const SubmitButton = ({ disabled }) => {
   return (
     <Button
+      width={{ base: "100%", lg: "200px" }}
       disabled={disabled}
       data-cy="project-submit"
       type="submit"
@@ -79,63 +82,53 @@ const ProjectCreate = () => {
   return (
     <>
       {currentUser && isArtist(currentUser) ? (
-        <Box
-          data-cy="project-create-ui"
-          borderRadius="lg"
-          m={{ base: 5, md: 16, lg: 10 }}
-          p={{ base: 5, lg: 8 }}
-        >
-          <Box>
-            <Heading
-              fontSize={{
-                base: "3xl",
-                md: "4xl",
-              }}
-              mb={{ lg: 10 }}
-            >
-              Create your project
-            </Heading>
-
-            <Box
-              bg={"white"}
-              borderRadius="lg"
-              p={8}
-              color={"gray.700"}
-              shadow="base"
-            >
-              <VStack spacing={5}>
-                <form onSubmit={(e) => handleSubmit(e)}>
-                  <FormControl isRequired>
-                    <FormLabel>Title</FormLabel>
-                    <InputGroup>
-                      <Input
-                        data-cy="project-title"
-                        type="text"
-                        name="title"
-                        placeholder="Your projet's title"
-                        onChange={(e) => setTitle(e.target.value)}
-                      />
-                    </InputGroup>
-                  </FormControl>
-
-                  <FormControl isRequired>
-                    <FormLabel>Description</FormLabel>
-
-                    <Textarea
-                      data-cy="project-description"
-                      name="description"
-                      placeholder="Describe your project"
-                      rows={6}
-                      resize="none"
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </FormControl>
-                  <SubmitButton disabled={inputsInvalid} />
-                </form>
-              </VStack>
+        <Container maxW={"7xl"}>
+          <SimpleGrid
+            columns={{ base: 1, lg: 1 }}
+            spacing={{ base: 8, md: 10 }}
+            py={{ base: 18, md: 24 }}
+          >
+            <Box as={"header"}>
+              <Heading
+                lineHeight={1.1}
+                fontWeight={600}
+                fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+              >
+                Create Your Project Here
+              </Heading>
             </Box>
-          </Box>
-        </Box>
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <SimpleGrid columns={1} spacing={5} data-cy="project-create-ui">
+                <FormControl isRequired>
+                  <FormLabel>Title</FormLabel>
+                  <InputGroup>
+                    <Input
+                      data-cy="project-title"
+                      type="text"
+                      name="title"
+                      placeholder="Your projet's title"
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </InputGroup>
+                </FormControl>
+
+                <FormControl isRequired>
+                  <FormLabel>Description</FormLabel>
+
+                  <Textarea
+                    data-cy="project-description"
+                    name="description"
+                    placeholder="Describe your project"
+                    rows={6}
+                    resize="none"
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </FormControl>
+                <SubmitButton disabled={inputsInvalid} />
+              </SimpleGrid>
+            </form>
+          </SimpleGrid>
+        </Container>
       ) : (
         <Navigate
           to={"/"}
