@@ -6,10 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./state/store";
 import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
+import axios from "axios";
 
 if (window.Cypress) {
   window.store = store;
 }
+
+axios.defaults.baseURL = 'http://localhost:3001' 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

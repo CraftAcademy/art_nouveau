@@ -49,12 +49,13 @@ describe("When a user see the project listing ", () => {
       cy.projectItems().first().should("contain", "read more...");
     });
 
-    it('is expected to route visitor to sign-up view', () => {
+    it("is expected to route visitor to sign-up view", () => {
       cy.visit("projects/1");
       cy.url().should("include", "/auth");
     });
 
     it("is expected to kick the user out when trying to navigate to project detail view", () => {
+      cy.intercept("GET", "**/projects/1", { statusCode: 401 });
       cy.visit("projects/1");
       cy.get("body").should("contain", "You can't do that!");
     });
