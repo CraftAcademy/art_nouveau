@@ -23,13 +23,21 @@ describe("When a user see the project listing ", () => {
         });
     });
 
-    it("is expected to see a 'read more' link for each project", () => {
-      cy.projectItems().first().should("contain", "read more...");
+    it("is expected to render the cursor as a pointer", () => {
+      cy.get("body")
+        .trigger("mouseover")
+        .invoke("css", "cursor")
+        .should("equal", "auto");
+      cy.projectItems()
+        .first()
+        .trigger("mouseover")
+        .invoke("css", "cursor")
+        .should("equal", "pointer");
     });
 
     describe('following the "read more..." link', () => {
       beforeEach(() => {
-        cy.get("[data-cy=project-1-link]").click();
+        cy.get("[data-cy=project-1-link]").first().click();
       });
 
       it("is expected to direct user to new url when clicked", () => {
@@ -45,16 +53,15 @@ describe("When a user see the project listing ", () => {
   });
 
   describe("as a visitor", () => {
-    it("is expected to see a 'read more' link for each project", () => {
-      cy.projectItems().first().should("contain", "read more...");
-    });
-
-    it('is expected to route visitor to sign-up view', () => {
+    it("is expected to route visitor to sign-up view", () => {
       cy.visit("projects/1");
       cy.url().should("include", "/auth");
     });
 
     it("is expected to kick the user out when trying to navigate to project detail view", () => {
+      cy.intercept("GET", `${Cypress.env("apiUrl")}/projects/1`, {
+        statusCode: 401,
+      });
       cy.visit("projects/1");
       cy.get("body").should("contain", "You can't do that!");
     });

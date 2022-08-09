@@ -8,7 +8,7 @@ describe("When a user visits the application", () => {
     cy.wait("@projectsIndex").its("request.method").should("eql", "GET");
   });
 
-  it("is expected to store project data in application state", () => {
+  it("is expected to store data about 3 projecs in application state", () => {
     cy.wait("@projectsIndex");
     cy.applicationState()
       .invoke("getState")
@@ -26,7 +26,7 @@ describe("When a user visits the application", () => {
       .should("contain.text", "City Art Walk")
       .and("contain.text", "Lorem ipsum...")
       .next()
-      .should("contain.text", "Jazz Concert Promo Poster & Website")
+      .should("contain.text", "Jazz Concert")
       .and("contain.text", "Lorem ipsum...");
   });
 });
