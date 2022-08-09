@@ -43,7 +43,7 @@ viewports.forEach((viewport) => {
 
       describe("successfully", () => {
         beforeEach(() => {
-          cy.intercept("POST", "**/projects", {
+          cy.intercept("POST", `${Cypress.env("apiUrl")}/projects`, {
             fixture: "projectCreateSuccessfulResponse.json",
             statusCode: 201,
           }).as("createProject");
@@ -81,7 +81,7 @@ viewports.forEach((viewport) => {
       describe("unsuccessfully", () => {
         describe("with missing fields", () => {
           beforeEach(() => {
-            cy.intercept("POST", "**/projects", {
+            cy.intercept("POST", `${Cypress.env("apiUrl")}/projects`, {
               fixture: "projectCreateErrorResponse.json",
               statusCode: 422,
             }).as("createProjectError");
@@ -103,9 +103,9 @@ viewports.forEach((viewport) => {
 
         describe("on network error", () => {
           beforeEach(() => {
-            cy.intercept("POST", "**/projects", { forceNetworkError: true }).as(
-              "networkError"
-            );
+            cy.intercept("POST", `${Cypress.env("apiUrl")}/projects`, {
+              forceNetworkError: true,
+            }).as("networkError");
             cy.getCy("project-title").type("My awesome project");
             cy.getCy("project-description").type("Yada yada...");
             cy.getCy("project-submit").click();

@@ -7,9 +7,11 @@ describe("When user creates a developer account", () => {
   describe("as an unauthenticated user", () => {
     describe("successfully as a developer", () => {
       beforeEach(() => {
-        cy.viewport('ipad-2')
-        cy.intercept("GET", "projects/1", { fixture: "projectsShowId1.json" });
-        cy.intercept("POST", "**/auth**", {
+        cy.viewport("ipad-2");
+        cy.intercept("GET", `${Cypress.env("apiUrl")}/projects/1`, {
+          fixture: "projectsShowId1.json",
+        });
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/auth**`, {
           fixture: "createAccountResponseForDeveloperAccount.json",
           statusCode: 201,
         }).as("createAccount");

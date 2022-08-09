@@ -4,9 +4,9 @@ Cypress.Commands.add("getCy", (identifier) => {
 });
 
 Cypress.Commands.add("visitApplication", (path) => {
-  cy.intercept("GET", "**/projects", { fixture: "projectsIndex.json" }).as(
-    "projectsIndex"
-  );
+  cy.intercept("GET", `${Cypress.env("apiUrl")}/projects`, {
+    fixture: "projectsIndex.json",
+  }).as("projectsIndex");
   cy.visit(path ? `/${path}` : "/");
 });
 

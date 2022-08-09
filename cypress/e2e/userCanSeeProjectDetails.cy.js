@@ -55,7 +55,9 @@ describe("When a user see the project listing ", () => {
     });
 
     it("is expected to kick the user out when trying to navigate to project detail view", () => {
-      cy.intercept("GET", "**/projects/1", { statusCode: 401 });
+      cy.intercept("GET", `${Cypress.env("apiUrl")}/projects/1`, {
+        statusCode: 401,
+      });
       cy.visit("projects/1");
       cy.get("body").should("contain", "You can't do that!");
     });

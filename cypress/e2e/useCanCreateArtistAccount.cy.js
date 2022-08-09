@@ -9,7 +9,11 @@ describe("When user creates an artist account", () => {
     beforeEach(() => {
       cy.applicationState().invoke("dispatch", {
         type: "user/setCurrentUser",
-        payload: { name: "Thomas", email: "thomas@random.com", roles: ['artist', 'developer'] },
+        payload: {
+          name: "Thomas",
+          email: "thomas@random.com",
+          roles: ["artist", "developer"],
+        },
       });
       cy.getCy("create-project").click();
     });
@@ -26,7 +30,7 @@ describe("When user creates an artist account", () => {
   describe("as an unauthenticated user", () => {
     describe("successfully as an artist", () => {
       beforeEach(() => {
-        cy.intercept("POST", "**/auth**", {
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/auth**`, {
           fixture: "createAccountResponseForArtistAccount.json",
           statusCode: 201,
         }).as("createAccount");
@@ -62,7 +66,7 @@ describe("When user creates an artist account", () => {
 
     describe("successfully as a developer", () => {
       beforeEach(() => {
-        cy.intercept("POST", "**/auth**", {
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/auth**`, {
           fixture: "createAccountResponseForDeveloperAccount.json",
           statusCode: 201,
         }).as("createAccount");
@@ -84,7 +88,7 @@ describe("When user creates an artist account", () => {
 
     describe("unsuccessfully", () => {
       beforeEach(() => {
-        cy.intercept("POST", "**/auth**", {
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/auth**`, {
           fixture: "createAccountResponseError.json",
           statusCode: 422,
         }).as("createAccountError");
