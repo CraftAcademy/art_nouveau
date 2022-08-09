@@ -1,9 +1,18 @@
-import { Button, List, ListItem, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Grid,
+  List,
+  ListItem,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import ProjectsService from "../modules/ProjectsService";
 import { setMessage } from "../state/features/messageSlice";
+import ProjectsUI from "./project/ProjectsUI";
 
 const Projects = () => {
   const { projects } = useSelector((state) => state.projects);
@@ -11,6 +20,7 @@ const Projects = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (location?.state?.message) {
       dispatch(
@@ -33,25 +43,37 @@ const Projects = () => {
     }
   };
   return (
-    <List data-cy="projects-list">
+    <Grid
+      m={"20px"}
+      templateColumns={"repeat(3, 1fr)"}
+      gap={6}
+      data-cy="projects-list"
+      // direction={["column", "row"]}
+      spacing={"20px"}
+    >
       {projects.map((project) => {
         return (
-          <ListItem key={project.id}>
-            <Text fontSize={20}>{project.title}</Text>
-            <Text>{project.description}</Text>
+          <ProjectsUI
+            key={project.id}
+            project={project}
+            handleProjectNavigation={handleProjectNavigation}
+          />
+          // <ListItem key={project.id}>
+          //   <Text fontSize={20}>{project.title}</Text>
+          //   <Text>{project.description}</Text>
 
-            <Button
-              colorScheme="teal"
-              size="xs"
-              onClick={() => handleProjectNavigation(project)}
-              data-cy={`project-${project.id}-link`}
-            >
-              read more...
-            </Button>
-          </ListItem>
+          //   <Button
+          //     colorScheme="teal"
+          //     size="xs"
+          //     onClick={() => handleProjectNavigation(project)}
+          //     data-cy={`project-${project.id}-link`}
+          //   >
+          //     read more...
+          //   </Button>
+          // </ListItem>
         );
       })}
-    </List>
+    </Grid>
   );
 };
 

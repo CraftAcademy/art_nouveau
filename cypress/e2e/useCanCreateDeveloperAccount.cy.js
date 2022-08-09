@@ -15,7 +15,7 @@ describe("When user creates a developer account", () => {
           fixture: "createAccountResponseForDeveloperAccount.json",
           statusCode: 201,
         }).as("createAccount");
-        cy.getCy("project-1-link").click();
+        cy.getCy("project-1-link").first().click();
         cy.signUp({
           email: "user@email.com",
           password: "password",
@@ -52,7 +52,7 @@ describe("When user creates a developer account", () => {
     describe("unsuccessfully as an artist", () => {
       beforeEach(() => {
         cy.authenticateUser({ roles: ["artist"] });
-        cy.getCy("project-1-link").click();
+        cy.getCy("project-1-link").first().click();
       });
 
       it("is expected that the join button should not exist", () => {
