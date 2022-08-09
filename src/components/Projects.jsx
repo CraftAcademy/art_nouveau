@@ -1,18 +1,10 @@
-import {
-  Button,
-  Grid,
-  List,
-  ListItem,
-  SimpleGrid,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import ProjectsService from "../modules/ProjectsService";
 import { setMessage } from "../state/features/messageSlice";
 import ProjectsUI from "./project/ProjectsUI";
+import { Grid } from "@chakra-ui/react";
 
 const Projects = () => {
   const { projects } = useSelector((state) => state.projects);
@@ -48,7 +40,6 @@ const Projects = () => {
       templateColumns={"repeat(3, 1fr)"}
       gap={6}
       data-cy="projects-list"
-      // direction={["column", "row"]}
       spacing={"20px"}
     >
       {projects.map((project) => {
@@ -58,19 +49,6 @@ const Projects = () => {
             project={project}
             handleProjectNavigation={handleProjectNavigation}
           />
-          // <ListItem key={project.id}>
-          //   <Text fontSize={20}>{project.title}</Text>
-          //   <Text>{project.description}</Text>
-
-          //   <Button
-          //     colorScheme="teal"
-          //     size="xs"
-          //     onClick={() => handleProjectNavigation(project)}
-          //     data-cy={`project-${project.id}-link`}
-          //   >
-          //     read more...
-          //   </Button>
-          // </ListItem>
         );
       })}
     </Grid>

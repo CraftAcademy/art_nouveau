@@ -1,4 +1,3 @@
-import React from "react";
 import Projects from "../../Projects";
 import Hero from "../hero/Hero";
 
