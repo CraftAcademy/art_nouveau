@@ -12,7 +12,7 @@ if (window.Cypress) {
   window.store = store;
 }
 
-axios.defaults.baseURL = 'http://localhost:3001' 
+axios.defaults.baseURL = 'https://art-nouveau-api.herokuapp.com' 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
