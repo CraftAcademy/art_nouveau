@@ -4,7 +4,7 @@ import { store } from "../state/store";
 
 const ProjectsService = {
   async index() {
-    const { data } = await axios.get("http://localhost:3001/projects");
+    const { data } = await axios.get("/projects");
     store.dispatch(setProjects(data.projects));
   },
 };
