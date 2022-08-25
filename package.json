@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI= react-scripts build && echo '/* /index.html 200' | cat",
     "test": "react-scripts test --runInBand --no-cache",
     "cy:open": "cypress open --e2e -b chrome",
     "cy:run": "cypress run -b chrome",

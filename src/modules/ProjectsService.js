@@ -4,8 +4,12 @@ import { store } from "../state/store";
 
 const ProjectsService = {
   async index() {
-    const { data } = await axios.get("http://localhost:3001/projects");
-    store.dispatch(setProjects(data.projects));
+    const { data } = await axios.get("/projects");
+    if (process.env.NODE_ENV === "production") {
+      store.dispatch(setProjects(data));
+    } else {
+      store.dispatch(setProjects(data.projects));
+    }
   },
 };
 
